@@ -1,5 +1,10 @@
 package src;
 
+/**
+ * @author Nils Muralles
+ * @since 30/3/24
+ * @description ADT del paciente
+ */
 public class Patient implements Comparable<Patient> {
     String name;
     String symptom;

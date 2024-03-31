@@ -6,6 +6,9 @@ import src.Patient;
 
 public class PatientTest {
  
+    /**
+     * Test 1: Comprobando el sistema para comparar pacientes
+     */
     @Test
     public void testCompareTwoPatients() {
         Patient criticalPatient = new Patient();
