@@ -2,6 +2,9 @@ package test;
 
 import src.Patient;
 import src.PriorityQueue;
+
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 /**
@@ -22,6 +25,30 @@ public class PriorityQueueTest {
         patientA.setSymptom("Stomachache");
         patientA.setPrecedence('D');
         mPriorityQueue.insert(patientA);
+    }
+
+    /**
+     * test 2: Obtener el elemento de mayor prioridad
+     */
+    @Test
+    public void testGetMostPriorityElement() {
+        PriorityQueue<Patient> mPriorityQueue = new PriorityQueue<>();
+        Patient patientA = new Patient();
+        Patient patientB = new Patient();
+        Patient patientC = new Patient();
+        patientA.setName("Robert Smith");
+        patientA.setSymptom("Stomachache");
+        patientA.setPrecedence('D');
+        mPriorityQueue.insert(patientA);
+        patientB.setName("Joe Shmoe");
+        patientB.setSymptom("headache");
+        patientB.setPrecedence('C');
+        mPriorityQueue.insert(patientB);
+        patientC.setName("Marie Jordan");
+        patientC.setSymptom("Signs of labor");
+        patientC.setPrecedence('A');
+        mPriorityQueue.insert(patientC);
+        assertEquals(mPriorityQueue.pop(), patientC);
     }
 }
 
