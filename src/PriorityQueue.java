@@ -10,45 +10,39 @@ public class PriorityQueue<T extends Comparable<T>> {
 
     public void insert(T value) {
         count++;
-        insert(root, value);
+        insert(root, value, 0);
     }
 
-    private void insert(Node<T> current, T value) {
+    private void insert(Node<T> current, T value, int displacement) {
+        Node<T> newNode = new Node<T>(value);
+        String path = Integer.toBinaryString(count);
+
         if (current == null) {
-            root = new Node<T>(value);
+            root = newNode;
             return;
         }
 
-        if (current.getLeft() == null || current.getRight() == null) {
-            if (current.getLeft() == null) {
-                Node<T> left = new Node<T>(value);
-                left.setParent(current);
-                current.setLeft(left);
-                evaluateInherentOrder(left);
+        for (int i = 1 + displacement; i < path.length(); i++) {
+            char c = path.charAt(i);
 
-            } else {
-                Node<T> right = new Node<T>(value);
-                right.setParent(current);
-                current.setRight(right);
-                evaluateInherentOrder(right);
+            if (c == '0') {
+                if (current.getLeft() != null) {
+                    insert(current.getLeft(), value, displacement++);
+                } else {
+                    current.setLeft(newNode);
+                    return;
+                }   
             }
 
-        } else {
-            insert(current.getLeft(), value);
+            else if (c == '1') {
+                if (current.getRight() != null) {
+                    insert(current.getRight(), value, displacement++);
+                } else {
+                    current.setRight(newNode);
+                    return;
+                }
+            }
         }
-
     }
 
-    private void evaluateInherentOrder(Node<T> current) {
-        if (current.getValue().compareTo(current.getParent().getValue()) == 1) {
-            swap(current.getParent(), current);
-        }
-    }
-
-    private void swap(Node<T> target, Node<T> reference) {
-        T targetValue = target.getValue();
-        T referenceValue = reference.getValue();
-        target.setValue(referenceValue);
-        reference.setValue(targetValue);
-    }
 }
