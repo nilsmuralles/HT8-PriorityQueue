@@ -8,12 +8,22 @@ package src;
 public class PriorityQueue<T extends Comparable<T>> {
     private Node<T> root;
     private int count;
+    private int size;
     
     /**
      * Constructor de la Priority Queue
      */
     public PriorityQueue() {
         this.count = 0;
+        this.size = 0;
+    }
+
+    /**
+     * Obtener el tamaño del árbol
+     * @return Tamaño del árbol
+     */
+    public int size() {
+        return size;
     }
 
     /**
@@ -21,6 +31,7 @@ public class PriorityQueue<T extends Comparable<T>> {
      * @param value Valor a insertar
      */
     public void insert(T value) {
+        size++;
         count++;
         insert(root, value, 0);
     }

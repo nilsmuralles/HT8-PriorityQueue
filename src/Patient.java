@@ -71,5 +71,13 @@ public class Patient implements Comparable<Patient> {
             return 0;
         }
     }
+
+    /**
+     * Representación de un paciente
+     */
+    @Override
+    public String toString() {
+        return "Nombre: " + name + "\nSíntomas: " + symptom + "\nPrioridad: " + precedence;
+    }
     
 }
