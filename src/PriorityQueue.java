@@ -33,6 +33,8 @@ public class PriorityQueue<T extends Comparable<T>> {
                 } else {
                     newNode.setParent(current);
                     current.setLeft(newNode);
+                    evalInvariantOrderInsertion(current.getLeft());
+                    System.out.println(((Patient)current.getLeft().getValue()).getPrecedence());
                     break;
                 }   
             }
@@ -45,11 +47,29 @@ public class PriorityQueue<T extends Comparable<T>> {
                 } else {
                     newNode.setParent(current);
                     current.setRight(newNode);
+                    evalInvariantOrderInsertion(current.getRight());
+                    System.out.println(((Patient)current.getRight().getValue()).getPrecedence());
                     break;
                 }
             }
-        }
+        }    
+    }
 
-        
+    private void evalInvariantOrderInsertion(Node<T> current) {
+        if (current.getParent() == null) {
+            return;
+        } else {
+            if (current.getValue().compareTo(current.getParent().getValue()) == 1) {
+                swap(current, current.getParent());
+                evalInvariantOrderInsertion(current.getParent());
+            }
+        }
+    }
+
+    private void swap(Node<T> n1, Node<T> n2) {
+        T v1 = n1.getValue();
+        T v2 = n2.getValue();
+        n1.setValue(v2);
+        n2.setValue(v1);
     }
 }
