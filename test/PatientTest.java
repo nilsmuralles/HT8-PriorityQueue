@@ -4,6 +4,12 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import src.Patient;
 
+/**
+ * @author Nils Muralles Morales
+ * @since 03/04/24
+ * @description Tests de la ADT de paciente
+*/
+
 public class PatientTest {
  
     /**

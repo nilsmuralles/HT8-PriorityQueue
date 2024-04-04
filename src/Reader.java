@@ -5,6 +5,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * @author Nils Muralles
+ * @since 03/04/24
+ * @description ADT de un Reader para el archivo con los datos
+ */
 public class Reader {
     private File file;
 
