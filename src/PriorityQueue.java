@@ -34,7 +34,6 @@ public class PriorityQueue<T extends Comparable<T>> {
                     newNode.setParent(current);
                     current.setLeft(newNode);
                     evalInvariantOrderInsertion(current.getLeft());
-                    System.out.println(((Patient)current.getLeft().getValue()).getPrecedence());
                     break;
                 }   
             }
@@ -48,7 +47,6 @@ public class PriorityQueue<T extends Comparable<T>> {
                     newNode.setParent(current);
                     current.setRight(newNode);
                     evalInvariantOrderInsertion(current.getRight());
-                    System.out.println(((Patient)current.getRight().getValue()).getPrecedence());
                     break;
                 }
             }
@@ -71,5 +69,86 @@ public class PriorityQueue<T extends Comparable<T>> {
         T v2 = n2.getValue();
         n1.setValue(v2);
         n2.setValue(v1);
+    }
+
+    public T pop() {
+        if (count == 0) {
+            return null;
+
+        } else if (count == 1) {
+            return root.getValue();
+
+        } else if (count == 2) {
+            if (root.getValue().compareTo(root.getLeft().getValue()) == -1) {
+                swap(root, root.getLeft());
+            }
+        }
+
+        T rootValue = root.getValue();
+        Node<T> lastNode = getLastNode(root, 0);
+        Node<T> lastNodeParent = lastNode.getParent();
+
+        swap(root, lastNode);
+        lastNode.setValue(null);
+
+        if (lastNodeParent.getLeft() != null) {
+            if ((lastNodeParent.getLeft().getValue() == null)) {
+                lastNodeParent.setLeft(null);
+            }
+        }
+
+        if (lastNodeParent.getRight() != null) {
+            if ((lastNodeParent.getRight().getValue() == null)) {
+                lastNodeParent.setRight(null);
+            }
+        }
+        count--;
+
+        evalInvariantOrderPop(root);
+        return rootValue;
+    }
+
+    private Node<T> getLastNode(Node<T> current, int displacement) {
+        String pathToLastNode = Integer.toBinaryString(count);
+
+        if (current.getLeft() == null && current.getRight() == null) {;
+            return current;
+        }
+
+        for (int i = 1 + displacement; i < pathToLastNode.length(); i++) {
+            char c = pathToLastNode.charAt(i);
+            
+            if (c == '0') {
+                displacement++;
+                return getLastNode(current.getLeft(), displacement);
+            }
+
+            if (c == '1') {
+                displacement++;
+                return getLastNode(current.getRight(), displacement);
+            }
+        }
+        
+        return null;
+    }
+
+    private void evalInvariantOrderPop(Node<T> current) {
+        if (current.getLeft() == null && current.getRight() == null) {
+            return;
+        }
+
+        if (current.getRight() == null) {
+            if (current.getValue().compareTo(current.getLeft().getValue()) == 1) {
+                swap(current, current.getLeft());
+                evalInvariantOrderPop(current.getLeft());
+            }
+
+        } else {
+            if (current.getRight().getValue().compareTo(current.getLeft().getValue()) == 1) {
+                swap(current.getLeft(), current.getRight());
+            }
+            swap(current, current.getLeft());
+            evalInvariantOrderPop(current.getLeft());
+        }
     }
 }
