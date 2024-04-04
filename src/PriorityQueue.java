@@ -22,14 +22,13 @@ public class PriorityQueue<T extends Comparable<T>> {
             return;
         }
 
-        //evaluateInherentOrder(current.getRight(), current.getLeft());
-
         for (int i = 1 + displacement; i < path.length(); i++) {
             char c = path.charAt(i);
 
             if (c == '0') {
                 if (current.getLeft() != null) {
-                    insert(current.getLeft(), value, displacement++);
+                    displacement++;
+                    insert(current.getLeft(), value, displacement);
                     break;
                 } else {
                     newNode.setParent(current);
@@ -40,7 +39,8 @@ public class PriorityQueue<T extends Comparable<T>> {
 
             else if (c == '1') {
                 if (current.getRight() != null) {
-                    insert(current.getRight(), value, displacement++);
+                    displacement++;
+                    insert(current.getRight(), value, displacement);
                     break;
                 } else {
                     newNode.setParent(current);
@@ -49,23 +49,7 @@ public class PriorityQueue<T extends Comparable<T>> {
                 }
             }
         }
-    }
 
-    @SuppressWarnings("unused")
-    private void evaluateInherentOrder(Node<T> target, Node<T> reference) { 
-        if (target != null && reference != null) {
-            if (target.getValue().compareTo(reference.getValue()) == 1) {
-                swap(target, reference);
-                return;
-            }
-        } 
-        return;
-    }
-
-    private void swap(Node<T> n1, Node<T> n2) {
-        T value1 = n1.getValue();
-        T value2 = n2.getValue();
-        n1.setValue(value2);
-        n2.setValue(value1);
+        
     }
 }
